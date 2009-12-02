@@ -1,4 +1,5 @@
 #summary How to run FlexUnit tests on the library
+#labels Featured
 
 To compile and execute FlexUnit tests on the library, first checkout the library using Subversion:
 {{{
