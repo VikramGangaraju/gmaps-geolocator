@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<project name="gmaps-geolocator" basedir=".">
+	
+	<property file="build.properties"/>
+	
+	<available file="flex.properties" filepath="."
+		property="flexconfig.present"/>
+	<fail unless="flexconfig.present">
+		Please create a file named "flex.properties" which defines FLEX_HOME as pointing to the directory of your Flex SDK.
+	</fail>
+	
+	<property file="flex.properties"/>
+	
+	<target name="flex.setup">
+		<description>Registers the Flex Ant Tasks</description>
+		<fail unless="FLEX_HOME">
+			Please define FLEX_HOME as pointing to your Flex SDK in 'flex.properties'
+		</fail>
+		<mkdir dir="${bin.dir}"/>
+		<taskdef classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"
+			resource="flexTasks.tasks"/>
+	</target>
+	
+	<target name="compile.tests" depends="flex.setup">
+		<description>Compiles the tests and test runner swf.</description>
+		<mxmlc file="${test.source.file}" output="${test.swf.file}" debug="${test.swf.isDebug}"
+				incremental="true">
+			<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
+			<load-config filename="fx-tests-config.xml"/>
+		</mxmlc>
+	</target>
+	
+	<target name="build.release" depends="flex.setup">
+		<description>Builds a release version of the library to a SWC</description>
+		<compc output="${release.swc.file}" incremental="true">
+			<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
+			<load-config filename="fx-release-config.xml"/>
+			<include-sources dir="${src.dir}" includes="*"/>
+		</compc>
+	</target>
+	
+	<target name="build.debug" depends="flex.setup">
+		<description>Builds a debug version of the library to a SWC</description>
+		<compc output="${debug.swc.file}" incremental="true" debug="true">
+			<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
+			<load-config filename="fx-debug-config.xml"/>
+			<include-sources dir="${src.dir}" includes="*"/>
+		</compc>
+	</target>
+</project>

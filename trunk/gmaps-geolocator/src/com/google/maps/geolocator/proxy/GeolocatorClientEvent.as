@@ -17,7 +17,7 @@ package com.google.maps.geolocator.proxy {
 		private var _tokenId:String;
 		
 		public function GeolocatorClientEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false,
-				callingEvent:GeocodingEvent, tokenId:String = null) {
+				callingEvent:GeocodingEvent = null, tokenId:String = null) {
 			super(type, bubbles, cancelable);
 			_callingEvent = callingEvent;
 			_tokenId = tokenId;

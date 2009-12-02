@@ -4,7 +4,6 @@ package com.google.maps.geolocator.impl {
 	import com.google.maps.geolocator.Geolocator;
 	import com.google.maps.geolocator.GeolocatorEvent;
 	import com.google.maps.geolocator.GeolocatorIDGenerator;
-	import com.google.maps.geolocator.proxy.GeolocatorClientProxy;
 	import com.google.maps.services.ClientGeocoder;
 	import com.google.maps.services.GeocodingEvent;
 	
@@ -104,6 +103,7 @@ package com.google.maps.geolocator.impl {
 		}
 		
 		[Bindable]
+		public function set clientGeocoder(value:ClientGeocoder):void { }
 		public function get clientGeocoder():ClientGeocoder { return _clientGeocoder; }
 	}
 }
