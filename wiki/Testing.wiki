@@ -14,4 +14,4 @@ ant compile.tests
 After the tests have compiled, you may view them by pointing your browser to the location of the tests.swf file. 
 
 ----
-NOTE: for more on how to build the library, see Building.
+NOTE: for more on how to build the library, see [Building].
