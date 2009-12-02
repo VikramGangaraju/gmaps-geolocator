@@ -1,11 +1,13 @@
 package com.google.maps.geolocator.proxy {
 	import com.google.maps.geolocator.Geolocator;
+	import com.google.maps.services.GeocodingEvent;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;
+
 	/**
 	 * Dispatched when a result has been returned from the remote geolocation 
 	 * service.
@@ -34,15 +36,15 @@ package com.google.maps.geolocator.proxy {
 			
 			switch (memberName) {
 //				IEventDispatcher methods
-				case "addEventListener": return addEventListener;
-				case "removeEventListener": return removeEventListener;
-				case "dispatchEvent": return dispatchEvent;
-				case "hasEventListener": return hasEventListener;
-				case "willTrigger": return willTrigger;
+				case "addEventListener": return Function(addEventListener);
+				case "removeEventListener": return Function(removeEventListener);
+				case "dispatchEvent": return Function(dispatchEvent);
+				case "hasEventListener": return Function(hasEventListener);
+				case "willTrigger": return Function(willTrigger);
 //				local members
 				case "dispatcher": return dispatcher;
 				case "geolocator": return geolocator;
-				case "onMethodCalled": return onMethodCalled;
+				case "onMethodCalled": return Function(onMethodCalled);
 			}
 			
 //			if it's not declared on this object, send it an anonymous function
@@ -68,7 +70,7 @@ package com.google.maps.geolocator.proxy {
 			} else {
 //				remote call failed
 				dispatcher.dispatchEvent(new GeolocatorClientEvent(GeolocatorClientEvent.GEOLOCATOR_FAULT, false,
-					false, GeocodingEvent(parameters[0], token));
+					false, GeocodingEvent(parameters[0]), token));
 			}
 		}
 		
@@ -78,7 +80,7 @@ package com.google.maps.geolocator.proxy {
 		}
 		
 		public function removeEventListener(type:String, listener:Function, useCapture:Boolean=false):void {
-			dispatcher.addEventListener(type, listener, useCapture, priority, useWeakReference);
+			dispatcher.removeEventListener(type, listener, useCapture);
 		}
 		
 		public function dispatchEvent(event:Event):Boolean {
